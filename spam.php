@@ -28,6 +28,9 @@ abstract class comment_spam {
   }
 
   static function filter($approved) {
+    // respect any other filtering that may have taken place
+    if (!$approved || $approved === 'spam') return $approved;
+    
     $ip = $_SERVER['REMOTE_ADDR'];
     $response = self::query($ip);
     
@@ -35,8 +38,6 @@ abstract class comment_spam {
     // this is a goto situation, we'll use exceptions to simulate the goto
     // logic. The catch block at the end is the unapprove label, and the
     // spam-case is nested inside some checks.
-
-    $approved = 1;
     try {
       if ($response === false) throw new Exception();
       $xml = simplexml_load_string($response);
