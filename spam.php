@@ -37,7 +37,7 @@ abstract class comment_spam {
     
 
     // no http referrer == extremely dubious
-    if (trim($_SERVER['HTTP_REFERER'] === ''))
+    if (empty($_SERVER['HTTP_REFERER']))
       $approved = 0;
     
     $ip = $_SERVER['REMOTE_ADDR'];
