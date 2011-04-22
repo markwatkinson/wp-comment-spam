@@ -31,6 +31,10 @@ abstract class comment_spam {
     // respect any other filtering that may have taken place that marked
     // it as spam
     if ($approved === 'spam') return $approved;
+    
+    // don't filter admins...apparently this is an admin check.
+    if (current_user_can('manage_options')) return $approved;
+    
 
     // no http referrer == extremely dubious
     if (trim($_SERVER['HTTP_REFERER'] === ''))
